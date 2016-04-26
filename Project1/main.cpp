@@ -15,7 +15,7 @@ void showVectorVals(std::string label, std::vector<double> &v)
 
     std::cout << std::endl;
 }
-void train(char inputfile[]) {
+void train(char inputfile[],char outputFile[]) {
 	TrainingData trainData(inputfile);
 	// e.g., { 2, 4, 1 }
 	std::vector<unsigned> topology;
@@ -29,7 +29,7 @@ void train(char inputfile[]) {
 	int trainingIteration = 0;
 	///////////////////
 	int mycontrol = 0;
-	while ((!trainData.isEof()) && (mycontrol<10)) {
+	while ((!trainData.isEof()) && (mycontrol<10000)) {
 		mycontrol++;
 		++trainingIteration;
 		std::cout << std::endl << "Iteration " << trainingIteration;
@@ -59,7 +59,7 @@ void train(char inputfile[]) {
 			<< myNet.getError() << std::endl;
 	}
 	std::cout << std::endl << "Training Complete" << std::endl;
-	myNet.saveStateToFile("./trainResult.txt");
+	myNet.saveStateToFile(outputFile);
 }
 void continueTrain(char inputfile[], char networkfile[]) {
 	TrainingData trainData(inputfile);
@@ -106,13 +106,13 @@ void continueTrain(char inputfile[], char networkfile[]) {
 			<< myNet.getError() << std::endl;
 	}
 	std::cout << std::endl << "Training Complete" << std::endl;
-	myNet.saveStateToFile("./trainResult.txt");
+	myNet.saveStateToFile(networkfile);
 }
 int main()
 {
 	
 	continueTrain("./trainingData.txt","./trainResult.txt");
-	//train("./trainingData.txt");
+	//train("./trainingData.txt","./trainResult2.txt");
 	
 	int tt;//Avoid stop 
 	std::cin >> tt;
